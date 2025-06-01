@@ -106,7 +106,7 @@ export default function Dashboard() {
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="topic" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="topic" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                     <BookOpen className="w-4 h-4 inline mr-2" />
                     What would you like to learn about?
                   </label>
@@ -122,7 +122,7 @@ export default function Dashboard() {
                 </div>
 
                 <div>
-                  <label htmlFor="replica" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="replica" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                     <User className="w-4 h-4 inline mr-2" />
                     Choose Instructor
                   </label>
@@ -140,7 +140,7 @@ export default function Dashboard() {
                 </div>
 
                 <div>
-                  <label htmlFor="persona" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="persona" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                     <Sparkles className="w-4 h-4 inline mr-2" />
                     Teaching Style (Optional)
                   </label>
