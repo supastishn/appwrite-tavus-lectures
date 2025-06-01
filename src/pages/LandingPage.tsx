@@ -4,12 +4,6 @@ import { Brain } from 'lucide-react';
 
 const LandingPage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-light/30 via-white to-primary-light/10 font-sans">
-      {/* Navigation */}
-      <nav className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-r from-primary to-primary-dark rounded
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 text-center">
         <div className="max-w-3xl mx-auto">
