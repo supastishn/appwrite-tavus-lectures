@@ -9,28 +9,7 @@ const LandingPage: React.FC = () => {
       <nav className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-r from-primary to-primary-dark rounded-lg flex items-center justify-center">
-              <Brain className="w-5 h-5 text-white" />
-            </div>
-            <h1 className="text-xl font-bold text-gray-900">LearnAI</h1>
-          </div>
-          <div>
-            <Link 
-              to="/login" 
-              className="mr-4 text-gray-600 hover:text-indigo-800 transition-colors"
-            >
-              Log in
-            </Link>
-            <Link 
-              to="/register" 
-              className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
-            >
-              Get Started
-            </Link>
-          </div>
-        </div>
-      </nav>
-
+            <div className="w-8 h-8 bg-gradient-to-r from-primary to-primary-dark rounded
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 text-center">
         <div className="max-w-3xl mx-auto">
