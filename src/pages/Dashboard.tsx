@@ -1,0 +1,303 @@
+import React, { useState, useEffect } from 'react';
+import { createLesson, getUserLessons, deleteLesson, Lesson } from '../services/lessons';
+import { Models } from 'appwrite';
+import { useAppwriteUser } from '../contexts/UserContext';
+import { useNavigate } from 'react-router-dom';
+import { Plus, Play, Clock, CheckCircle, XCircle, User, Brain, Sparkles, BookOpen, Trash2 } from 'lucide-react';
+
+export default function Dashboard() {
+  const [topic, setTopic] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [lessons, setLessons] = useState<Lesson[]>([]);
+  const { user, handleLogout } = useAppwriteUser();
+  const navigate = useNavigate();
+
+  // Add state for replica and persona selection
+  const [replicaId, setReplicaId] = useState('r79e1c033f');
+  const [personaId, setPersonaId] = useState('');
+
+  const replicaOptions = [
+    { value: 'r79e1c033f', label: 'Default Replica' },
+    // Add other replica options here
+  ];
+
+  const personaOptions = [
+    { value: 'p88964a7', label: 'Teacher Persona' },
+    // Add other persona options here
+  ];
+
+  useEffect(() => {
+    const fetchLessons = async () => {
+      if (user) {
+        try {
+          const userLessons = await getUserLessons(user.$id);
+          setLessons(userLessons);
+        } catch (err) {
+          // Optionally handle error
+        }
+      }
+    };
+    fetchLessons();
+
+    // Refresh lessons every 30 seconds
+    const interval = setInterval(fetchLessons, 30000);
+    return () => clearInterval(interval);
+  }, [user]);
+
+  const handleLogoutClick = async () => {
+    await handleLogout();
+    navigate('/');
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!topic.trim()) {
+      setError('Please enter a topic.');
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+        const newLesson = await createLesson(topic, user.$id, replicaId, personaId);
+        setTopic(''); // Reset topic on success
+        setLessons((prev) => [newLesson, ...prev]); // Add new lesson to list
+
+        // Add redirect to Tavus conversation
+        if (newLesson.conversationUrl) {
+          window.open(newLesson.conversationUrl, '_blank');
+        }
+    } catch (err) {
+        console.error('Failed to create lesson:', err);
+        setError('Failed to create lesson. Please try again. ' + (err instanceof Error ? err.message : 'Unknown error'));
+    } finally {
+        setLoading(false);
+    }
+  };
+
+  const handleDeleteLesson = async (lessonId: string) => {
+    if (!confirm('Are you sure you want to delete this lesson?')) {
+      return;
+    }
+    
+    try {
+      await deleteLesson(lessonId);
+      setLessons((prev) => prev.filter(lesson => lesson.$id !== lessonId));
+    } catch (err) {
+      console.error('Failed to delete lesson:', err);
+      // Optionally show error message to user
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 font-sans">
+      {/* Modern Header */}
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-gradient-to-r from-primary to-primary-dark rounded-lg flex items-center justify-center">
+                <Brain className="w-5 h-5 text-white" />
+              </div>
+              <h1 className="text-xl font-bold text-gray-900">LearnAI Dashboard</h1>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2 text-sm text-gray-600">
+                <User className="w-4 h-4" />
+                <span>{user?.name || user?.email}</span>
+              </div>
+              <button
+                onClick={handleLogoutClick}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Create Lesson Panel */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="w-10 h-10 bg-gradient-to-r from-primary to-primary-dark rounded-xl flex items-center justify-center">
+                  <Plus className="w-6 h-6 text-white" />
+                </div>
+                <h2 className="text-xl font-semibold text-gray-900">Create New Lesson</h2>
+              </div>
+              
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label htmlFor="topic" className="block text-sm font-medium text-gray-700 mb-2">
+                    <BookOpen className="w-4 h-4 inline mr-2" />
+                    What would you like to learn about?
+                  </label>
+                  <input
+                    type="text"
+                    id="topic"
+                    value={topic}
+                    onChange={(e) => setTopic(e.target.value)}
+                    placeholder="e.g., Machine Learning Basics, Spanish Grammar..."
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-colors text-sm"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="replica" className="block text-sm font-medium text-gray-700 mb-2">
+                    <User className="w-4 h-4 inline mr-2" />
+                    Choose Instructor
+                  </label>
+                  <select
+                    id="replica"
+                    value={replicaId}
+                    onChange={(e) => setReplicaId(e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-colors text-sm"
+                    required
+                  >
+                    {replicaOptions.map((opt) => (
+                      <option key={opt.value} value={opt.value}>{opt.label}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="persona" className="block text-sm font-medium text-gray-700 mb-2">
+                    <Sparkles className="w-4 h-4 inline mr-2" />
+                    Teaching Style (Optional)
+                  </label>
+                  <select
+                    id="persona"
+                    value={personaId}
+                    onChange={(e) => setPersonaId(e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-colors text-sm"
+                  >
+                    <option value="">Standard approach</option>
+                    {personaOptions.map((opt) => (
+                      <option key={opt.value} value={opt.value}>{opt.label}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {error && (
+                  <div className="p-4 bg-red-50 border border-red-200 rounded-xl">
+                    <p className="text-sm text-red-600">{error}</p>
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full flex items-center justify-center space-x-2 py-3 px-4 bg-primary text-white rounded-xl hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium"
+                >
+                  {loading ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                      <span>Creating...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Plus className="w-4 h-4" />
+                      <span>Create Lesson</span>
+                    </>
+                  )}
+                </button>
+              </form>
+            </div>
+          </div>
+
+          {/* Lessons Grid */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-semibold text-gray-900">Your Lessons</h3>
+              <span className="text-sm text-gray-500">{lessons.length} total</span>
+            </div>
+
+            {lessons.length === 0 ? (
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-12 text-center">
+                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <BookOpen className="w-8 h-8 text-gray-400" />
+                </div>
+                <h4 className="text-lg font-medium text-gray-900 mb-2">No lessons yet</h4>
+                <p className="text-gray-500 mb-6">Create your first AI-powered lesson to get started</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {lessons.map(lesson => {
+                  const getStatusIcon = (status: string) => {
+                    switch (status) {
+                      case 'completed': return <CheckCircle className="w-5 h-5 text-green-600" />;
+                      case 'processing': return <Clock className="w-5 h-5 text-blue-600" />;
+                      case 'failed': return <XCircle className="w-5 h-5 text-red-600" />;
+                      default: return <Clock className="w-5 h-5 text-gray-400" />;
+                    }
+                  };
+
+                  const getStatusStyle = (status: string) => {
+                    switch (status) {
+                      case 'completed': return 'bg-green-50 text-green-700 border-green-200';
+                      case 'processing': return 'bg-blue-50 text-blue-700 border-blue-200';
+                      case 'failed': return 'bg-red-50 text-red-700 border-red-200';
+                      default: return 'bg-gray-50 text-gray-700 border-gray-200';
+                    }
+                  };
+
+                  return (
+                    <div key={lesson.$id} className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                      <div className="flex items-start justify-between mb-4">
+                        <h4 className="font-semibold text-gray-900 text-lg leading-tight">{lesson.topic}</h4>
+                        <div className="flex items-center space-x-2">
+                          {getStatusIcon(lesson.status)}
+                          <button
+                            onClick={() => handleDeleteLesson(lesson.$id)}
+                            className="p-1 text-gray-400 hover:text-red-500 transition-colors"
+                            title="Delete lesson"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                      
+                      <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${getStatusStyle(lesson.status)} mb-4`}>
+                        {lesson.status.charAt(0).toUpperCase() + lesson.status.slice(1)}
+                      </div>
+
+                      <div className="space-y-3">
+                        {lesson.conversationUrl && !lesson.videoUrl && lesson.status === 'processing' && (
+                          <a
+                            href={lesson.conversationUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors"
+                          >
+                            <User className="w-4 h-4" />
+                            <span>Join Live Session</span>
+                          </a>
+                        )}
+
+                        {lesson.videoUrl && lesson.status === 'completed' && (
+                          <a
+                            href={lesson.videoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center space-x-2 text-green-600 hover:text-green-700 font-medium text-sm transition-colors"
+                          >
+                            <Play className="w-4 h-4" />
+                            <span>Watch Lesson</span>
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
