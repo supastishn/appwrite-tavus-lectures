@@ -2,8 +2,8 @@ import { Client, Databases, Query } from 'node-appwrite';
 
 export default async ({ req, res, log, error }) => {
   const client = new Client()
-    .setEndpoint(process.env.APPWRITE_ENDPOINT)
-    .setProject(process.env.APPWRITE_PROJECT_ID)
+    .setEndpoint('https://fra.cloud.appwrite.io/v1')
+    .setProject('tavus-lectures')
     .setKey(req.headers['x-appwrite-key']);
   
   const databases = new Databases(client);
