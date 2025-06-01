@@ -50,7 +50,7 @@ export default function LessonForm({ onLessonCreated }: { onLessonCreated: (less
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-                <label htmlFor="topic" className="block text-sm font-semibold text-gray-700">Lesson Topic</label>
+                <label htmlFor="topic" className="block text-sm font-semibold text-gray-700 dark:text-gray-200">Lesson Topic</label>
                 <input
                     type="text"
                     id="topic"
@@ -61,7 +61,7 @@ export default function LessonForm({ onLessonCreated }: { onLessonCreated: (less
                 />
             </div>
             <div>
-                <label htmlFor="replica" className="block text-sm font-semibold text-gray-700">Replica</label>
+                <label htmlFor="replica" className="block text-sm font-semibold text-gray-700 dark:text-gray-200">Replica</label>
                 <select
                   id="replica"
                   value={replicaId}
@@ -75,7 +75,7 @@ export default function LessonForm({ onLessonCreated }: { onLessonCreated: (less
                 </select>
             </div>
             <div>
-                <label htmlFor="persona" className="block text-sm font-semibold text-gray-700">Persona (Optional)</label>
+                <label htmlFor="persona" className="block text-sm font-semibold text-gray-700 dark:text-gray-200">Persona (Optional)</label>
                 <select
                   id="persona"
                   value={personaId}
