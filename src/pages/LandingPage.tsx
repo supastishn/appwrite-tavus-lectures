@@ -1,13 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Brain } from 'lucide-react';
+import { useTheme } from '../contexts/ThemeContext';
 
 const LandingPage: React.FC = () => {
+  const { theme } = useTheme();
+
   return (
-    <div className="min-h-screen font-sans bg-gradient-to-br from-primary-light/30 via-white to-primary-light/10 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 transition-colors">
+    <div className="min-h-screen font-sans bg-gradient-to-br from-primary-light/30 via-white to-primary-light/10 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 transition-colors relative">
+      {/* Add circle image based on theme */}
+      <div className="absolute top-0 right-0 z-0 opacity-20 dark:opacity-20">
+        <img 
+          src={theme === 'dark' ? "/white_circle_360x360.png" : "/black_circle_360x360.png"}
+          alt=""
+          className="w-80 h-80"
+        />
+      </div>
       
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 text-center">
+      <section className="container mx-auto px-4 py-20 text-center relative z-10">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-extrabold text-primary-dark dark:text-white mb-8 leading-tight">
             Transform How You Learn
@@ -32,7 +43,7 @@ const LandingPage: React.FC = () => {
           </div>
         </div>
       </section>
-
+      
       {/* Features Section */}
       <section id="features" className="py-16 bg-white dark:bg-gray-900 transition-colors">
         <div className="container mx-auto px-4">
