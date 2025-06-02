@@ -13,7 +13,7 @@ const LandingPage: React.FC = () => {
         <img 
           src={theme === 'dark' ? "/white_circle_360x360.png" : "/black_circle_360x360.png"}
           alt=""
-          className="w-80 h-80"
+          className="w-20 h-20"
         />
       </div>
       
