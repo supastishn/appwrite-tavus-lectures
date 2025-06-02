@@ -243,7 +243,7 @@ export default function Dashboard() {
                       <div className="space-y-3">
                         {lesson.conversationUrl && !lesson.videoUrl && lesson.status === 'processing' && (
                           <a
-                            href={lesson.conversationUrl}
+                            href={`/conversation/${lesson.tavusId}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors"
