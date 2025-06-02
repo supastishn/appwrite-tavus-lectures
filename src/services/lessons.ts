@@ -86,3 +86,23 @@ export const deleteLesson = async (lessonId: string): Promise<void> => {
     throw new Error('Unknown error deleting lesson');
   }
 };
+
+/**
+ * Fetch a lesson by its Tavus conversation id (tavusId).
+ * Returns the lesson document or throws if not found.
+ */
+export const getLessonByConversationId = async (conversationId: string): Promise<Lesson | null> => {
+  try {
+    const query = [Query.equal('tavusId', conversationId)];
+    const result = await databases.listDocuments(LESSONS_DB, LESSONS_COLLECTION, query);
+    if (result.documents.length > 0) {
+      return result.documents[0] as unknown as Lesson;
+    }
+    return null;
+  } catch (err) {
+    if (err instanceof Error) {
+      throw new Error(`Failed to fetch lesson by conversation id: ${err.message}`);
+    }
+    throw new Error('Unknown error fetching lesson by conversation id');
+  }
+};
