@@ -99,11 +99,7 @@
             "logging": true,
             "entrypoint": "src/main.js",
             "commands": "npm install",
-            "path": "functions/tavusWebhook",
-            "vars": {
-                "APPWRITE_ENDPOINT": "https://fra.cloud.appwrite.io/v1",
-                "APPWRITE_PROJECT_ID": "tavus-lectures"
-            }
+            "path": "functions/tavusWebhook"
         },
         {
             "$id": "generateLesson",
@@ -166,13 +162,7 @@
             "logging": true,
             "entrypoint": "src/main.js",
             "commands": "npm install",
-            "path": "functions/generateLesson",
-            "vars": {
-                "APPWRITE_ENDPOINT": "https://fra.cloud.appwrite.io/v1",
-                "APPWRITE_PROJECT_ID": "tavus-lectures",
-                "TAVUS_API_KEY": "4595f61361e54bf7a46d44401a3a0b74",
-                "TAVUS_WEBHOOK_URL": "https://683ad744af57aa6ed5a1.fra.appwrite.run"
-            }
+            "path": "functions/generateLesson"
         },
         {
             "$id": "tavusLooper",
@@ -235,12 +225,7 @@
             "logging": true,
             "entrypoint": "src/main.js",
             "commands": "npm install",
-            "path": "functions/tavusLooper",
-            "vars": {
-                "TAVUS_API_KEY": "4595f61361e54bf7a46d44401a3a0b74",
-                "APPWRITE_ENDPOINT": "https://fra.cloud.appwrite.io/v1",
-                "APPWRITE_PROJECT_ID": "tavus-lectures"
-            }
+            "path": "functions/tavusLooper"
         }
     ],
     "databases": [
