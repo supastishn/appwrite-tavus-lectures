@@ -13,8 +13,31 @@ const ConversationPage: React.FC = () => {
   const [conversationUrl, setConversationUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [sdkReady, setSdkReady] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const callFrameRef = useRef<any>(null);
+
+  // Effect to load the Daily SDK if not already present
+  useEffect(() => {
+    if (typeof window.Daily !== 'undefined') {
+      setSdkReady(true);
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/@daily-co/daily-js';
+    script.async = true;
+    script.onload = () => setSdkReady(true);
+    script.onerror = () => setError('Failed to load video SDK');
+
+    document.head.append(script);
+
+    return () => {
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const fetchConversationUrl = async () => {
@@ -41,12 +64,17 @@ const ConversationPage: React.FC = () => {
     fetchConversationUrl();
   }, [id]);
 
+  // Tavus video initialization effect
   useEffect(() => {
-    // Load and initialize Daily call frame when URL is available
-    if (!conversationUrl || !containerRef.current) return;
+    // Add additional checks
+    if (!sdkReady || !conversationUrl || !containerRef.current || callFrameRef.current) return;
 
     try {
-      // Create and configure call frame
+      // Validate the URL
+      if (!conversationUrl.startsWith('https://')) {
+        throw new Error('Invalid Tavus URL');
+      }
+
       callFrameRef.current = window.Daily.createFrame({
         url: conversationUrl,
         iframeStyle: {
@@ -63,12 +91,12 @@ const ConversationPage: React.FC = () => {
 
       // Join the meeting
       callFrameRef.current.join();
-      
+
       // Append to container
       containerRef.current.appendChild(callFrameRef.current.iframe());
-    } catch (err) {
-      setError('Failed to initialize video interface');
-      console.error('DailyJS initialization error:', err);
+    } catch (err: any) {
+      setError(`Video player error: ${err.message}`);
+      console.error('DailyJS error:', err);
     }
 
     // Cleanup function
@@ -82,12 +110,17 @@ const ConversationPage: React.FC = () => {
         callFrameRef.current = null;
       }
     };
-  }, [conversationUrl]);
+  }, [conversationUrl, sdkReady]);
 
-  if (loading) {
+  if (loading || !sdkReady) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-gray-600 dark:text-gray-300">
+            Loading video interface...
+          </p>
+        </div>
       </div>
     );
   }
