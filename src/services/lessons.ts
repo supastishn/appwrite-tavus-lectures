@@ -14,6 +14,7 @@ export interface Lesson {
   createdAt: string;
   tavusId: string;
   conversationUrl: string;
+  rating?: number;
 }
 
 export const createLesson = async (topic: string, userId: string, replicaId: string, personaId: string = ""): Promise<Lesson> => {
@@ -84,6 +85,24 @@ export const deleteLesson = async (lessonId: string): Promise<void> => {
       throw new Error(`Failed to delete lesson: ${err.message}`);
     }
     throw new Error('Unknown error deleting lesson');
+  }
+};
+
+export const updateLessonRating = async (
+  lessonId: string, 
+  rating: number
+): Promise<void> => {
+  try {
+    await databases.updateDocument(
+      LESSONS_DB,
+      LESSONS_COLLECTION,
+      lessonId,
+      { rating }
+    );
+  } catch (err) {
+    throw new Error(
+      `Failed to update rating: ${err instanceof Error ? err.message : 'Unknown error'}`
+    );
   }
 };
 

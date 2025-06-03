@@ -304,6 +304,14 @@
                     "array": false,
                     "size": 255,
                     "default": ""
+                },
+                {
+                    "key": "rating",
+                    "type": "integer",
+                    "required": false,
+                    "array": false,
+                    "size": 0,
+                    "default": null
                 }
             ],
             "indexes": []

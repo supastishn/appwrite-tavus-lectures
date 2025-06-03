@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { createLesson, getUserLessons, deleteLesson, Lesson } from '../services/lessons';
+import { createLesson, getUserLessons, deleteLesson, Lesson, updateLessonRating } from '../services/lessons';
 import { Models } from 'appwrite';
 import { useAppwriteUser } from '../contexts/UserContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { Plus, Play, Clock, CheckCircle, XCircle, User, Brain, Sparkles, BookOpen, Trash2, LogOut } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 
 export default function Dashboard() {
   const [topic, setTopic] = useState('');
@@ -39,6 +40,67 @@ export default function Dashboard() {
     { value: 'p88964a7', label: 'Teacher Persona' },
     // Add other persona options here
   ];
+
+  // StarRating component for lesson ratings
+  const StarRating = ({ 
+    lessonId,
+    currentRating,
+    onChange
+  }: {
+    lessonId: string;
+    currentRating: number;
+    onChange: (newRating: number) => void;
+  }) => {
+    const [rating, setRating] = useState(currentRating);
+    const [tempRating, setTempRating] = useState(0);
+    const [loading, setLoading] = useState(false);
+
+    const handleRate = async (newRating: number) => {
+      setLoading(true);
+      try {
+        await updateLessonRating(lessonId, newRating);
+        setRating(newRating);
+        onChange(newRating);
+      } catch (err) {
+        console.error('Rating update failed:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    return (
+      <div className="flex items-center mt-2">
+        <span className="text-sm font-medium text-gray-600 mr-2">Rating:</span>
+        <div className="flex">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <button
+              key={star}
+              onClick={() => handleRate(star)}
+              onMouseEnter={() => setTempRating(star)}
+              onMouseLeave={() => setTempRating(0)}
+              disabled={loading}
+              className="text-xl focus:outline-none disabled:opacity-50"
+              aria-label={`Rate ${star} stars`}
+            >
+              {star <= (tempRating || rating) ? (
+                <span className="text-amber-400">★</span>
+              ) : (
+                <span className="text-gray-300">☆</span>
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  // Helper to refresh lessons after rating
+  const refreshLessons = async () => {
+    if (user) {
+      const userLessons = await getUserLessons(user.$id);
+      setLessons(userLessons);
+    }
+  };
 
   useEffect(() => {
     const fetchLessons = async () => {
@@ -263,6 +325,17 @@ export default function Dashboard() {
                       <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${getStatusStyle(lesson.status)} mb-4`}>
                         {lesson.status.charAt(0).toUpperCase() + lesson.status.slice(1)}
                       </div>
+
+                      {/* Star rating for completed lessons */}
+                      {lesson.status === 'completed' && lesson.videoUrl && (
+                        <div className="mt-3">
+                          <StarRating
+                            lessonId={lesson.$id}
+                            currentRating={lesson.rating || 0}
+                            onChange={() => refreshLessons()}
+                          />
+                        </div>
+                      )}
 
                       <div className="space-y-3">
                         {lesson.conversationUrl && !lesson.videoUrl && lesson.status === 'processing' && (
