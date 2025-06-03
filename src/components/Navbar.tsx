@@ -37,6 +37,16 @@ export default function Navbar() {
                 >
                   Dashboard
                 </Link>
+                <Link
+                  to="/profile"
+                  className={`text-sm font-medium transition-colors ${
+                    isActive('/profile')
+                      ? 'text-primary dark:text-primary-light'
+                      : 'text-gray-700 hover:text-primary dark:text-gray-300 dark:hover:text-primary-light'
+                  }`}
+                >
+                  Profile
+                </Link>
                 <button
                   onClick={handleLogout}
                   className="flex items-center space-x-1 text-sm font-medium text-gray-700 hover:text-primary dark:text-gray-300 dark:hover:text-primary-light transition-colors"
