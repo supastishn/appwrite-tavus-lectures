@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { createLesson, getUserLessons, deleteLesson, Lesson } from '../services/lessons';
 import { Models } from 'appwrite';
 import { useAppwriteUser } from '../contexts/UserContext';
-import { useNavigate } from 'react-router-dom';
-import { Plus, Play, Clock, CheckCircle, XCircle, User, Brain, Sparkles, BookOpen, Trash2 } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Plus, Play, Clock, CheckCircle, XCircle, User, Brain, Sparkles, BookOpen, Trash2, LogOut } from 'lucide-react';
 
 export default function Dashboard() {
   const [topic, setTopic] = useState('');
