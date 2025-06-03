@@ -316,5 +316,13 @@
             ],
             "indexes": []
         }
+    ],
+    "buckets": [
+        {
+            "$id": "avatars",
+            "name": "avatars",
+            "fileSecurity": true,
+            "enabled": true
+        }
     ]
 }
