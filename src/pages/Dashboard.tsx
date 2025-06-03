@@ -100,22 +100,13 @@ export default function Dashboard() {
             <span className="text-gray-400 text-base">|</span>
             <span className="text-indigo-500 font-normal">Welcome {user?.name}</span>
           </h1>
-          <div className="flex items-center gap-4">
-            <Link 
-              to="/profile" 
-              className="p-2 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-full transition"
-              title="Go to Profile"
-            >
-              <User className="w-5 h-5" />
-            </Link>
-            <button
-              onClick={handleLogoutClick}
-              className="p-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-full transition"
-              title="Sign Out"
-            >
-              <LogOut className="w-5 h-5" />
-            </button>
-          </div>
+          <Link 
+            to="/profile" 
+            className="p-2 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-full transition"
+            title="Go to Profile"
+          >
+            <User className="w-5 h-5" />
+          </Link>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Create Lesson Panel */}
