@@ -17,6 +17,19 @@ export default function Dashboard() {
   const [replicaId, setReplicaId] = useState('r79e1c033f');
   const [personaId, setPersonaId] = useState('');
 
+  // Modal state for delete confirmation
+  const [deleteModal, setDeleteModal] = useState<{open: boolean; lessonId: string | null}>({
+    open: false,
+    lessonId: null,
+  });
+
+  const confirmDelete = async () => {
+    if (deleteModal.lessonId) {
+      await handleDeleteLesson(deleteModal.lessonId);
+      setDeleteModal({ open: false, lessonId: null });
+    }
+  };
+
   const replicaOptions = [
     { value: 'r79e1c033f', label: 'Default Replica' },
     // Add other replica options here
@@ -76,10 +89,6 @@ export default function Dashboard() {
   };
 
   const handleDeleteLesson = async (lessonId: string) => {
-    if (!confirm('Are you sure you want to delete this lesson?')) {
-      return;
-    }
-    
     try {
       await deleteLesson(lessonId);
       setLessons((prev) => prev.filter(lesson => lesson.$id !== lessonId));
@@ -242,7 +251,7 @@ export default function Dashboard() {
                         <div className="flex items-center space-x-2">
                           {getStatusIcon(lesson.status)}
                           <button
-                            onClick={() => handleDeleteLesson(lesson.$id)}
+                            onClick={() => setDeleteModal({ open: true, lessonId: lesson.$id })}
                             className="p-1 text-gray-400 hover:text-red-500 transition-colors"
                             title="Delete lesson"
                           >
@@ -290,4 +299,31 @@ export default function Dashboard() {
       </div>
     </div>
   );
+
+  // Modal for delete confirmation
 }
+/* Modal for delete confirmation */
+{deleteModal.open && (
+  <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 max-w-md w-full mx-4 shadow-xl">
+      <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Confirm Deletion</h3>
+      <p className="mb-6 text-gray-600 dark:text-gray-300">
+        Are you sure you want to delete this lesson? This action cannot be undone.
+      </p>
+      <div className="flex justify-end gap-3">
+        <button
+          onClick={() => setDeleteModal({ open: false, lessonId: null })}
+          className="px-4 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-xl transition"
+        >
+          Cancel
+        </button>
+        <button
+          onClick={confirmDelete}
+          className="px-4 py-2 bg-red-500 text-white hover:bg-red-600 rounded-xl transition"
+        >
+          Delete Lesson
+        </button>
+      </div>
+    </div>
+  </div>
+)}
