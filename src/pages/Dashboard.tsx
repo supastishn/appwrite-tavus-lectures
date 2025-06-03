@@ -4,7 +4,6 @@ import { Models } from 'appwrite';
 import { useAppwriteUser } from '../contexts/UserContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { Plus, Play, Clock, CheckCircle, XCircle, User, Brain, Sparkles, BookOpen, Trash2, LogOut } from 'lucide-react';
-import React, { useState, useEffect } from 'react';
 
 export default function Dashboard() {
   const [topic, setTopic] = useState('');
