@@ -43,4 +43,9 @@ Sample `200` Response:
 
 ## 🔒 Environment Variables
 
-No environment variables required.
+Configure these in Appwrite Console:
+- `APPWRITE_ENDPOINT`
+- `APPWRITE_PROJECT_ID`
+- `APPWRITE_API_KEY`
+- `TAVUS_API_KEY`
+- `TAVUS_WEBHOOK_URL`
