@@ -322,7 +322,13 @@
             "$id": "avatars",
             "name": "avatars",
             "fileSecurity": true,
-            "enabled": true
+            "enabled": true,
+            "$permissions": [
+                "read(\"any\")",
+                "create(\"users\")",
+                "update(\"users\")",
+                "delete(\"users\")"
+            ]
         }
     ]
 }

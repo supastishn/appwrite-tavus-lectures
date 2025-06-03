@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Brain, Sun, Moon, LogOut } from 'lucide-react';
+import { Brain, Sun, Moon, LogOut, User } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAppwriteUser } from '../contexts/UserContext';
+import { getAvatarUrl } from '../services/auth';
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
@@ -37,15 +38,16 @@ export default function Navbar() {
                 >
                   Dashboard
                 </Link>
-                <Link
-                  to="/profile"
-                  className={`text-sm font-medium transition-colors ${
-                    isActive('/profile')
-                      ? 'text-primary dark:text-primary-light'
-                      : 'text-gray-700 hover:text-primary dark:text-gray-300 dark:hover:text-primary-light'
-                  }`}
-                >
-                  Profile
+                <Link to="/profile" className="p-1 rounded-full" title="Profile">
+                  {user?.prefs?.avatarId ? (
+                    <img 
+                      src={getAvatarUrl(user.prefs.avatarId)}
+                      alt="Profile"
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                  ) : (
+                    <User className="w-5 h-5 text-indigo-600" />
+                  )}
                 </Link>
                 <button
                   onClick={handleLogout}
