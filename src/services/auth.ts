@@ -16,3 +16,12 @@ export const getCurrentUser = async () => {
 export const logout = async () => {
     return await account.deleteSession('current');
 };
+
+// Add these new methods:
+export const updateUserName = async (name: string) => {
+  return await account.updateName(name);
+};
+
+export const updatePassword = async (password: string, oldPassword: string) => {
+  return await account.updatePassword(password, oldPassword);
+};

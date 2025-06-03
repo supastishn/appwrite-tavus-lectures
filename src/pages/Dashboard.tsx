@@ -93,6 +93,30 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Dashboard Header with Profile Icon */}
+        <div className="flex items-center justify-between mb-10">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <span>Dashboard</span>
+            <span className="text-gray-400 text-base">|</span>
+            <span className="text-indigo-500 font-normal">Welcome {user?.name}</span>
+          </h1>
+          <div className="flex items-center gap-4">
+            <Link 
+              to="/profile" 
+              className="p-2 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-full transition"
+              title="Go to Profile"
+            >
+              <User className="w-5 h-5" />
+            </Link>
+            <button
+              onClick={handleLogoutClick}
+              className="p-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-full transition"
+              title="Sign Out"
+            >
+              <LogOut className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Create Lesson Panel */}
           <div className="lg:col-span-1">

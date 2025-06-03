@@ -9,6 +9,7 @@ import LandingPage from './pages/LandingPage';
 import NotFound from './pages/NotFound';
 import Navbar from './components/Navbar';
 import ConversationPage from './pages/ConversationPage';
+import Profile from './pages/Profile';
 
 function AppInner() {
   const { user, loading } = useAppwriteUser();
@@ -30,6 +31,7 @@ function AppInner() {
         <Route path="/register" element={user ? <Navigate to="/dashboard" /> : <Register />} />
         <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/" />} />
         <Route path="/conversation/:id" element={<ConversationPage />} />
+        <Route path="/profile" element={user ? <Profile /> : <Navigate to="/" />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
