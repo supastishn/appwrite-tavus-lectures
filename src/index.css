@@ -7,3 +7,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Add at the bottom */
+.hero-section {
+  position: relative;
+  z-index: 10;
+}

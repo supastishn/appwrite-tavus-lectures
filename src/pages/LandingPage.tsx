@@ -2,23 +2,18 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Brain } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
+import ThreeBackground from '../components/ThreeBackground';
 
 const LandingPage: React.FC = () => {
   const { theme } = useTheme();
 
   return (
     <div className="min-h-screen font-sans bg-gradient-to-br from-primary-light/30 via-white to-primary-light/10 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 transition-colors relative">
-      {/* Add circle image based on theme */}
-      <div className="absolute top-0 right-0 z-0 opacity-20 dark:opacity-20">
-        <img 
-          src={theme === 'dark' ? "/white_circle_360x360.png" : "/black_circle_360x360.png"}
-          alt=""
-          className="w-20 h-20"
-        />
-      </div>
+      {/* Three.js background */}
+      <ThreeBackground />
       
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 text-center relative z-10">
+      <section className="container mx-auto px-4 py-20 text-center hero-section">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-extrabold text-primary-dark dark:text-white mb-8 leading-tight">
             Transform How You Learn
