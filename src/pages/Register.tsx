@@ -53,7 +53,7 @@ export default function Register() {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="mt-1 block w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary-light transition bg-white"
+              className="mt-1 block w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary-light transition bg-white dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
               required
             />
           </div>
@@ -64,7 +64,7 @@ export default function Register() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 block w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary-light transition bg-white"
+              className="mt-1 block w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary-light transition bg-white dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
               required
             />
           </div>
@@ -75,7 +75,7 @@ export default function Register() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary-light transition bg-white"
+              className="mt-1 block w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary-light transition bg-white dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
               required
             />
           </div>
@@ -83,7 +83,7 @@ export default function Register() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex items-center justify-center gap-2 bg-primary text-white py-3 rounded-xl hover:bg-primary-dark transition-colors duration-200 font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 px-4 bg-gradient-to-r from-primary via-accent to-primary-dark text-white rounded-xl hover:scale-[1.03] hover:shadow-lg transition-all duration-200 font-semibold text-lg dark:from-indigo-700 dark:to-indigo-800"
           >
             {loading ? (
               <>

@@ -201,7 +201,7 @@ export default function Dashboard() {
                     value={topic}
                     onChange={(e) => setTopic(e.target.value)}
                     placeholder="e.g., Machine Learning Basics, Spanish Grammar..."
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-colors text-sm"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-inner focus:border-primary focus:ring-2 focus:ring-primary-light bg-white/70 transition dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
                     required
                   />
                 </div>
@@ -215,7 +215,7 @@ export default function Dashboard() {
                     id="replica"
                     value={replicaId}
                     onChange={(e) => setReplicaId(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-colors text-sm"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-inner focus:border-primary focus:ring-2 focus:ring-primary-light bg-white/70 transition dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
                     required
                   >
                     {replicaOptions.map((opt) => (
@@ -233,7 +233,7 @@ export default function Dashboard() {
                     id="persona"
                     value={personaId}
                     onChange={(e) => setPersonaId(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-colors text-sm"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-inner focus:border-primary focus:ring-2 focus:ring-primary-light bg-white/70 transition dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
                   >
                     <option value="">Standard approach</option>
                     {personaOptions.map((opt) => (
@@ -251,7 +251,7 @@ export default function Dashboard() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full flex items-center justify-center space-x-2 py-3 px-4 bg-primary text-white rounded-xl hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium"
+                  className="w-full flex items-center justify-center space-x-2 py-3 px-4 bg-primary text-white rounded-xl hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium dark:bg-indigo-700 dark:hover:bg-indigo-800"
                 >
                   {loading ? (
                     <>
