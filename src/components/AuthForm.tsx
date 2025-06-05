@@ -27,8 +27,9 @@ export default function AuthForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="bg-white border border-gray-200 p-10 rounded-3xl shadow-lg w-full max-w-md font-sans">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+      {/* Update card with dark mode background and border */}
+      <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-10 rounded-3xl shadow-lg w-full max-w-md font-sans">
         <div className="flex justify-center mb-8">
           <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center">
             <Brain className="w-8 h-8 text-white" />
