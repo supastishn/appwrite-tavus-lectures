@@ -84,7 +84,7 @@ export default function Register() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 px-4 bg-gradient-to-r from-primary via-accent to-primary-dark text-white rounded-xl hover:scale-[1.03] hover:shadow-lg transition-all duration-200 font-semibold text-lg dark:from-indigo-700 dark:to-indigo-800"
+            className="w-full flex items-center justify-center gap-2 bg-primary text-white py-3 rounded-xl hover:bg-primary-dark transition-colors duration-200 font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed dark:bg-indigo-700 dark:hover:bg-indigo-800"
           >
             {loading ? (
               <>
