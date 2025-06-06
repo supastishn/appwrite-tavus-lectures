@@ -278,7 +278,7 @@ export default function Dashboard() {
             </div>
 
             {lessons.length === 0 ? (
-              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-12 text-center">
+              <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg bg-opacity-80 dark:bg-opacity-80 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-12 text-center">
                 <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
                   <BookOpen className="w-8 h-8 text-gray-400" />
                 </div>
@@ -373,7 +373,7 @@ export default function Dashboard() {
     {/* Modal for delete confirmation */}
     {deleteModal.open && (
       <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 max-w-md w-full mx-4 shadow-xl">
+        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg bg-opacity-80 dark:bg-opacity-80 rounded-2xl p-6 max-w-md w-full mx-4 shadow-xl">
           <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Confirm Deletion</h3>
           <p className="mb-6 text-gray-600 dark:text-gray-300">
             Are you sure you want to delete this lesson? This action cannot be undone.
