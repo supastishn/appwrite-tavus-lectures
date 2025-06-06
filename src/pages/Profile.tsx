@@ -4,6 +4,7 @@ import { useAppwriteUser } from '../contexts/UserContext';
 import { updateUserName, updatePassword, uploadAvatar, updateAvatarId, deleteAvatar, getAvatarUrl } from '../services/auth';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
+import AloCard from '../components/AloCard';
 
 export default function Profile() {
   const { user, refetchUser, handleLogout } = useAppwriteUser();
@@ -111,7 +112,7 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-start justify-center py-10 font-sans">
-      <div className="w-full max-w-3xl mx-4 bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+      <div className="w-full max-w-3xl mx-4 bg-transparent rounded-2xl shadow-lg overflow-hidden">
         {/* Profile Header */}
         <div className="bg-gradient-to-r from-primary to-primary-dark p-6 text-white">
           <div className="flex items-center justify-between">
@@ -145,7 +146,7 @@ export default function Profile() {
           
           <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8">
             {/* Profile Info */}
-            <div className="border border-gray-200 dark:border-gray-700 rounded-xl p-5">
+            <AloCard className="p-5">
               <div className="flex flex-col items-center mb-6 relative">
                 <div className="relative">
                   {avatarPreview ? (
@@ -216,12 +217,12 @@ export default function Profile() {
                 <LogOut className="w-4 h-4" />
                 Sign Out
               </button>
-            </div>
+            </AloCard>
             
             {/* Update Forms */}
-            <div>
+            <AloCard className="p-5">
               {/* Update Name Form */}
-              <div className="border border-gray-200 dark:border-gray-700 rounded-xl p-5 mb-6">
+              <div className="mb-6">
                 <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white flex items-center gap-2">
                   <User className="w-5 h-5" />
                   Update Profile Info
@@ -252,7 +253,7 @@ export default function Profile() {
               </div>
               
               {/* Update Password Form */}
-              <div className="border border-gray-200 dark:border-gray-700 rounded-xl p-5">
+              <div>
                 <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white flex items-center gap-2">
                   <Key className="w-5 h-5" />
                   Change Password
@@ -296,7 +297,7 @@ export default function Profile() {
                   </button>
                 </form>
               </div>
-            </div>
+            </AloCard>
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Brain } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import ThreeBackground from '../components/ThreeBackground';
+import AloCard from '../components/AloCard';
 
 const LandingPage: React.FC = () => {
   const { theme } = useTheme();
@@ -44,7 +45,7 @@ const LandingPage: React.FC = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-16 text-gray-900 dark:text-white">Our Features</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div className="text-center p-8 bg-white dark:bg-gray-800 rounded-xl shadow-card hover:shadow-lg transition">
+            <AloCard className="text-center p-8">
               <div className="w-16 h-16 bg-indigo-100 dark:bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-indigo-600 dark:text-primary-light font-bold text-xl">1</span>
               </div>
@@ -52,9 +53,9 @@ const LandingPage: React.FC = () => {
               <p className="text-gray-600 dark:text-gray-300">
                 Create AI-powered educational videos in minutes from any topic
               </p>
-            </div>
+            </AloCard>
             
-            <div className="text-center p-8 bg-white dark:bg-gray-800 rounded-xl shadow-card hover:shadow-lg transition">
+            <AloCard className="text-center p-8">
               <div className="w-16 h-16 bg-indigo-100 dark:bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-indigo-600 dark:text-primary-light font-bold text-xl">2</span>
               </div>
@@ -62,9 +63,9 @@ const LandingPage: React.FC = () => {
               <p className="text-gray-600 dark:text-gray-300">
                 Video lessons tailored to your knowledge level and learning style
               </p>
-            </div>
+            </AloCard>
             
-            <div className="text-center p-8 bg-white dark:bg-gray-800 rounded-xl shadow-card hover:shadow-lg transition">
+            <AloCard className="text-center p-8">
               <div className="w-16 h-16 bg-indigo-100 dark:bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-indigo-600 dark:text-primary-light font-bold text-xl">3</span>
               </div>
@@ -72,7 +73,7 @@ const LandingPage: React.FC = () => {
               <p className="text-gray-600 dark:text-gray-300">
                 Interactive elements boost information retention and engagement
               </p>
-            </div>
+            </AloCard>
           </div>
         </div>
       </section>
@@ -108,29 +109,29 @@ const LandingPage: React.FC = () => {
 
           {/* Use Cases */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm">
+            <AloCard className="p-6">
               <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-4">
                 <span className="text-2xl">🎓</span>
               </div>
               <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Students</h3>
               <p className="text-gray-600 dark:text-gray-300">Get personalized explanations for complex topics at your own pace</p>
-            </div>
+            </AloCard>
             
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm">
+            <AloCard className="p-6">
               <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center mb-4">
                 <span className="text-2xl">👨‍🏫</span>
               </div>
               <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Educators</h3>
               <p className="text-gray-600 dark:text-gray-300">Create engaging supplementary content without hours of preparation</p>
-            </div>
+            </AloCard>
             
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm">
+            <AloCard className="p-6">
               <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center mb-4">
                 <span className="text-2xl">💼</span>
               </div>
               <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Professionals</h3>
               <p className="text-gray-600 dark:text-gray-300">Upskill quickly with targeted lessons for career advancement</p>
-            </div>
+            </AloCard>
           </div>
         </div>
       </section>

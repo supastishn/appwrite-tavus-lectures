@@ -4,6 +4,7 @@ import { Models } from 'appwrite';
 import { useAppwriteUser } from '../contexts/UserContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { Plus, Play, Clock, CheckCircle, XCircle, User, Brain, Sparkles, BookOpen, Trash2, LogOut } from 'lucide-react';
+import AloCard from '../components/AloCard';
 
 export default function Dashboard() {
   const [topic, setTopic] = useState('');
@@ -181,7 +182,7 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Create Lesson Panel */}
           <div className="lg:col-span-1">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+            <AloCard>
               <div className="flex items-center space-x-3 mb-6">
                 <div className="w-10 h-10 bg-gradient-to-r from-primary to-primary-dark rounded-xl flex items-center justify-center">
                   <Plus className="w-6 h-6 text-white" />
@@ -266,7 +267,7 @@ export default function Dashboard() {
                   )}
                 </button>
               </form>
-            </div>
+            </AloCard>
           </div>
 
           {/* Lessons Grid */}
@@ -306,7 +307,7 @@ export default function Dashboard() {
                   };
 
                   return (
-                    <div key={lesson.$id} className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow">
+                    <AloCard key={lesson.$id} className="hover:shadow-lg transition-shadow p-6">
                       <div className="flex items-start justify-between mb-4">
                         <h4 className="font-semibold text-gray-900 dark:text-white text-lg leading-tight">{lesson.topic}</h4>
                         <div className="flex items-center space-x-2">
@@ -361,7 +362,7 @@ export default function Dashboard() {
                           </a>
                         )}
                       </div>
-                    </div>
+                    </AloCard>
                   );
                 })}
               </div>
