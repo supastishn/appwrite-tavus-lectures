@@ -311,7 +311,9 @@
                     "required": false,
                     "array": false,
                     "size": 0,
-                    "default": null
+                    "default": null,
+                    "min": 1,
+                    "max": 5
                 }
             ],
             "indexes": []

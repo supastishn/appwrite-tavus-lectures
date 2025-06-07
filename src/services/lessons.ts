@@ -92,6 +92,11 @@ export const updateLessonRating = async (
   lessonId: string, 
   rating: number
 ): Promise<void> => {
+  // Add validation for rating range
+  if (rating < 1 || rating > 5) {
+    throw new Error('Rating must be between 1 and 5');
+  }
+
   try {
     await databases.updateDocument(
       LESSONS_DB,

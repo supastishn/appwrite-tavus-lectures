@@ -56,6 +56,11 @@ export default function Dashboard() {
     const [loading, setLoading] = useState(false);
 
     const handleRate = async (newRating: number) => {
+      // Add client-side validation
+      if (newRating < 1 || newRating > 5) {
+        return;
+      }
+      
       setLoading(true);
       try {
         await updateLessonRating(lessonId, newRating);
