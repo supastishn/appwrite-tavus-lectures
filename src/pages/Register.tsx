@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { signup } from '../services/auth';
 import { UserPlus, Brain } from 'lucide-react';
 import { useAppwriteUser } from '../contexts/UserContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Register() {
   const [email, setEmail] = useState('');
@@ -11,6 +11,7 @@ export default function Register() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { refetchUser } = useAppwriteUser();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,7 +20,8 @@ export default function Register() {
     
     try {
       await signup(email, password, name);
-      refetchUser();
+      await refetchUser();
+      navigate('/dashboard');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {

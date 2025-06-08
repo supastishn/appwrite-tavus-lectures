@@ -27,9 +27,15 @@ function AppInner() {
       <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <AuthForm />} />
-        <Route path="/register" element={user ? <Navigate to="/dashboard" /> : <Register />} />
-        <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/" />} />
+        <Route 
+          path="/login" 
+          element={user ? <Navigate to="/dashboard" replace /> : <AuthForm />} 
+        />
+        <Route 
+          path="/register" 
+          element={user ? <Navigate to="/dashboard" replace /> : <Register />} 
+        />
+        <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/" replace />} />
         <Route path="/conversation/:id" element={<ConversationPage />} />
         <Route path="/profile" element={user ? <Profile /> : <Navigate to="/" />} />
         <Route path="*" element={<NotFound />} />
