@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { createLesson } from '../services/lessons';
 import { Models } from 'appwrite';
 import { useAppwriteUser } from '../contexts/UserContext';
+import { PreferencesManager } from '../utils/preferences';
 
 export default function LessonForm({ onLessonCreated }: { onLessonCreated: (lesson: Models.Lesson) => void }) {
     const [topic, setTopic] = useState('');
@@ -9,8 +10,9 @@ export default function LessonForm({ onLessonCreated }: { onLessonCreated: (less
     const [error, setError] = useState<string | null>(null);
     const { user } = useAppwriteUser();
 
-    const [replicaId, setReplicaId] = useState('r79e1c033f');
-    const [personaId, setPersonaId] = useState('');
+    // Initialize with stored preferences instead of hardcoded defaults
+    const [replicaId, setReplicaId] = useState(() => PreferencesManager.getReplicaId());
+    const [personaId, setPersonaId] = useState(() => PreferencesManager.getPersonaId());
 
     // Available options
     const replicaOptions = [
@@ -22,6 +24,22 @@ export default function LessonForm({ onLessonCreated }: { onLessonCreated: (less
       { value: 'p88964a7', label: 'Teacher Persona' },
       // Add other persona options here
     ];
+
+    // Handler for replica selection that persists the choice
+    const handleReplicaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const newReplicaId = e.target.value;
+        setReplicaId(newReplicaId);
+        // Immediately persist the preference (like ConfigSystem.storeConfigurable)
+        PreferencesManager.setReplicaId(newReplicaId);
+    };
+
+    // Handler for persona selection that persists the choice  
+    const handlePersonaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const newPersonaId = e.target.value;
+        setPersonaId(newPersonaId);
+        // Immediately persist the preference (like ConfigSystem.storeConfigurable)
+        PreferencesManager.setPersonaId(newPersonaId);
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -65,7 +83,7 @@ export default function LessonForm({ onLessonCreated }: { onLessonCreated: (less
                 <select
                   id="replica"
                   value={replicaId}
-                  onChange={(e) => setReplicaId(e.target.value)}
+                  onChange={handleReplicaChange}
                   className="mt-1 block w-full border border-gray-300 rounded-xl shadow-inner focus:border-primary focus:ring-2 focus:ring-primary-light bg-white/70 transition px-4 py-3 text-lg"
                   required
                 >
@@ -79,7 +97,7 @@ export default function LessonForm({ onLessonCreated }: { onLessonCreated: (less
                 <select
                   id="persona"
                   value={personaId}
-                  onChange={(e) => setPersonaId(e.target.value)}
+                  onChange={handlePersonaChange}
                   className="mt-1 block w-full border border-gray-300 rounded-xl shadow-inner focus:border-primary focus:ring-2 focus:ring-primary-light bg-white/70 transition px-4 py-3 text-lg"
                 >
                   <option value="">No persona</option>
