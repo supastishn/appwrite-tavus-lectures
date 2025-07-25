@@ -5,6 +5,7 @@ import { useAppwriteUser } from '../contexts/UserContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { Plus, Play, Clock, CheckCircle, XCircle, User, Brain, Sparkles, BookOpen, Trash2, LogOut } from 'lucide-react';
 import AloCard from '../components/AloCard';
+import { PreferencesManager } from '../utils/preferences';
 
 export default function Dashboard() {
   const [topic, setTopic] = useState('');
@@ -14,9 +15,9 @@ export default function Dashboard() {
   const { user, handleLogout } = useAppwriteUser();
   const navigate = useNavigate();
 
-  // Add state for replica and persona selection
-  const [replicaId, setReplicaId] = useState('r79e1c033f');
-  const [personaId, setPersonaId] = useState('');
+  // Initialize with stored preferences instead of hardcoded defaults
+  const [replicaId, setReplicaId] = useState(() => PreferencesManager.getReplicaId());
+  const [personaId, setPersonaId] = useState(() => PreferencesManager.getPersonaId());
 
   // Modal state for delete confirmation
   const [deleteModal, setDeleteModal] = useState<{open: boolean; lessonId: string | null}>({
@@ -40,6 +41,22 @@ export default function Dashboard() {
     { value: 'p88964a7', label: 'Teacher Persona' },
     // Add other persona options here
   ];
+
+  // Handler for replica selection that persists the choice
+  const handleReplicaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newReplicaId = e.target.value;
+    setReplicaId(newReplicaId);
+    // Immediately persist the preference (like ConfigSystem.storeConfigurable)
+    PreferencesManager.setReplicaId(newReplicaId);
+  };
+
+  // Handler for persona selection that persists the choice  
+  const handlePersonaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newPersonaId = e.target.value;
+    setPersonaId(newPersonaId);
+    // Immediately persist the preference (like ConfigSystem.storeConfigurable)
+    PreferencesManager.setPersonaId(newPersonaId);
+  };
 
   // StarRating component for lesson ratings
   const StarRating = ({ 
@@ -220,7 +237,7 @@ export default function Dashboard() {
                   <select
                     id="replica"
                     value={replicaId}
-                    onChange={(e) => setReplicaId(e.target.value)}
+                    onChange={handleReplicaChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-inner focus:border-primary focus:ring-2 focus:ring-primary-light bg-white/70 transition dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
                     required
                   >
@@ -238,7 +255,7 @@ export default function Dashboard() {
                   <select
                     id="persona"
                     value={personaId}
-                    onChange={(e) => setPersonaId(e.target.value)}
+                    onChange={handlePersonaChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-inner focus:border-primary focus:ring-2 focus:ring-primary-light bg-white/70 transition dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
                   >
                     <option value="">Standard approach</option>
