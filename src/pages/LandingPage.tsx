@@ -1,12 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Brain } from 'lucide-react';
-import { useTheme } from '../contexts/ThemeContext';
+
 import ThreeBackground from '../components/ThreeBackground';
 import AloCard from '../components/AloCard';
 
 const LandingPage: React.FC = () => {
-  const { theme } = useTheme();
 
   return (
     <div className="min-h-screen font-sans bg-gradient-to-br from-primary-light/30 via-white to-primary-light/10 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 transition-colors relative">

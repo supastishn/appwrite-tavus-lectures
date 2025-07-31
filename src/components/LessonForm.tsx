@@ -29,6 +29,10 @@ export default function LessonForm({ onLessonCreated }: { onLessonCreated: (less
             setError('Please enter a topic.');
             return;
         }
+        if (!user) {
+            setError('Please log in to create a lesson.');
+            return;
+        }
         setLoading(true);
         setError(null);
         try {

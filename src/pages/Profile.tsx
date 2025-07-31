@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { User, Key, Mail, Save, XCircle, CheckCircle, Loader, LogOut, Pencil } from 'lucide-react';
+import { User, Key, Mail, XCircle, CheckCircle, Loader, LogOut, Pencil } from 'lucide-react';
 import { useAppwriteUser } from '../contexts/UserContext';
 import { updateUserName, updatePassword, uploadAvatar, updateAvatarId, deleteAvatar, getAvatarUrl } from '../services/auth';
 import { Link } from 'react-router-dom';
-import { useTheme } from '../contexts/ThemeContext';
 import AloCard from '../components/AloCard';
 
 export default function Profile() {
   const { user, refetchUser, handleLogout } = useAppwriteUser();
-  const { theme } = useTheme();
   const [name, setName] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
@@ -72,7 +70,7 @@ export default function Profile() {
       setAvatarFile(null);
       setStatus({ type: 'success', message: 'Avatar updated successfully!' });
       refetchUser();
-    } catch (err) {
+    } catch {
       setStatus({ type: 'error', message: 'Failed to update avatar' });
     }
   };

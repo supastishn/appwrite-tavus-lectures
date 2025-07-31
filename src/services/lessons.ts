@@ -1,6 +1,6 @@
 
-import { functions, databases, Permission } from '../lib/appwrite';
-import { ID, Permission as AppwritePermission, Query } from 'appwrite';
+import { functions, databases } from '../lib/appwrite';
+import { ID, Query } from 'appwrite';
 
 const LESSONS_DB = 'learnai_db';
 const LESSONS_COLLECTION = 'lessons';
@@ -46,7 +46,7 @@ export const createLesson = async (topic: string, userId: string, replicaId: str
           personaId
         })
       );
-    } catch (funcErr: any) {
+    } catch (funcErr: unknown) {
       // If function fails, update doc to failed state
       await databases.updateDocument(
         LESSONS_DB,
@@ -54,12 +54,14 @@ export const createLesson = async (topic: string, userId: string, replicaId: str
         lessonDoc.$id,
         { status: 'failed' }
       );
-      throw new Error(`Function failed: ${funcErr.message}`);
+      const errorMessage = funcErr instanceof Error ? funcErr.message : 'Unknown error';
+      throw new Error(`Function failed: ${errorMessage}`);
     }
 
     return lessonDoc;
-  } catch (err: any) {
-    throw new Error(`Lesson creation failed: ${err.message}`);
+  } catch (err: unknown) {
+    const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+    throw new Error(`Lesson creation failed: ${errorMessage}`);
   }
 };
 

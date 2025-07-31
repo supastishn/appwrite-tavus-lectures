@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { createLesson, getUserLessons, deleteLesson, Lesson, updateLessonRating } from '../services/lessons';
-import { Models } from 'appwrite';
+
 import { useAppwriteUser } from '../contexts/UserContext';
-import { useNavigate, Link } from 'react-router-dom';
-import { Plus, Play, Clock, CheckCircle, XCircle, User, Brain, Sparkles, BookOpen, Trash2, LogOut } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Plus, Play, Clock, CheckCircle, XCircle, User, Sparkles, BookOpen, Trash2 } from 'lucide-react';
 import AloCard from '../components/AloCard';
 
 export default function Dashboard() {
@@ -11,8 +11,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lessons, setLessons] = useState<Lesson[]>([]);
-  const { user, handleLogout } = useAppwriteUser();
-  const navigate = useNavigate();
+  const { user } = useAppwriteUser();
 
   // Add state for replica and persona selection
   const [replicaId, setReplicaId] = useState('r79e1c033f');
@@ -113,7 +112,7 @@ export default function Dashboard() {
         try {
           const userLessons = await getUserLessons(user.$id);
           setLessons(userLessons);
-        } catch (err) {
+        } catch {
           // Optionally handle error
         }
       }
@@ -125,10 +124,7 @@ export default function Dashboard() {
     return () => clearInterval(interval);
   }, [user]);
 
-  const handleLogoutClick = async () => {
-    await handleLogout();
-    navigate('/');
-  };
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

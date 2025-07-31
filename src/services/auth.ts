@@ -43,9 +43,9 @@ export const deleteAvatar = async (avatarId: string) => {
       import.meta.env.VITE_AVATAR_BUCKET_ID!,
       avatarId
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     // Handle specific error codes
-    if (error.code !== 404) {
+    if (error && typeof error === 'object' && 'code' in error && error.code !== 404) {
       throw error;
     }
   }
